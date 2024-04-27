@@ -95,3 +95,9 @@ main {
   opacity: 1;
   box-shadow: inset 2px 2px 10px 1px rgba(0, 0, 0, 0.5);
 }
+
+@media (max-width: 415px) {
+  .bord {
+    height: 100vh;
+  }
+}
