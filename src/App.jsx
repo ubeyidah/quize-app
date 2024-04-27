@@ -27,11 +27,12 @@ export default function App() {
 
   // flip dice
   function holdDice(id) {
-    setDice((oldDice) =>
-      oldDice.map((item) =>
-        item.id === id ? { ...item, isHeld: !item.isHeld } : item
-      )
-    );
+    !tenzies &&
+      setDice((oldDice) =>
+        oldDice.map((item) =>
+          item.id === id ? { ...item, isHeld: !item.isHeld } : item
+        )
+      );
   }
 
   // roll
