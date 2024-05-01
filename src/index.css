@@ -1,103 +1,123 @@
-@font-face {
-  font-family: Roboto;
-  src: url(./assets/fonts/Roboto-Regular.ttf);
-}
-@font-face {
-  font-family: Roboto-m;
-  src: url(./assets/fonts/Roboto-Medium.ttf);
-}
-@font-face {
-  font-family: Roboto-b;
-  src: url(./assets/fonts/Roboto-Bold.ttf);
-}
-
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: Roboto, Arial;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
-
 main {
   min-height: 100vh;
-  background: rgba(2, 32, 112, 0.582);
+  background: #c8ced0;
+  position: relative;
+  overflow: hidden;
+}
+
+main::before {
+  content: "";
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  background: rgba(230, 187, 187, 0.716);
+  border-radius: 50%;
+  right: -100px;
+  top: -100px;
+}
+main::after {
+  content: "";
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  background: rgba(96, 145, 218, 0.653);
+  border-radius: 50%;
+  bottom: -100px;
+  left: -100px;
+}
+
+.welcome {
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.bord {
-  flex: 1;
-  max-width: 600px;
-  background: #f5f5f5;
-  padding: 20px;
-  border-radius: 10px;
-  min-height: 60vh;
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
 }
 
-.bord .header {
-  text-align: center;
+.welcome h1 {
+  margin-bottom: 10px;
+  font-size: 2.5rem;
 }
 
-.bord .header h1 {
-  margin-bottom: 15px;
-  font-family: Roboto-m;
-  letter-spacing: 4px;
+.welcome p {
+  color: gray;
+  margin-bottom: 30px;
 }
 
-.bord .header p {
-  max-width: 300px;
+.btn {
+  font-size: 1.1rem;
+  padding: 10px 30px;
+  cursor: pointer;
+  border: none;
+  background-color: rgb(2, 50, 94);
+  border-radius: 10px;
+  color: white;
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  opacity: 0.6;
+}
+
+.btn:active {
+  border-radius: 0;
+  opacity: 1;
+}
+
+.container {
+  max-width: 800px;
+  padding: 0 20px;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.group-btns {
+  margin-top: 20px;
+}
+
+.choose-btn {
+  background-color: transparent;
+  padding: 3px 15px;
+  border: 2px solid gray;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 18px;
   font-size: 16px;
 }
 
-.bord .dice-container {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  row-gap: 30px;
-  column-gap: 20px;
-  min-width: 100%;
+.container .quiz {
+  border-bottom: 1px solid #afadad;
+  padding: 25px 0;
 }
 
-.bord .dice-container .dice {
-  margin-left: 50%;
-  transform: translateX(-50%);
-  width: 50px;
-  height: 50px;
-  border: none;
-  background: white;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.15);
-  font-size: 2rem;
-  font-weight: bold;
+.active {
+  background-color: rgba(2, 76, 145, 0.15);
+  border-color: rgba(2, 50, 94, 0.15);
 }
 
-.roll-btn {
-  font-size: 18px;
-  padding: 10px 40px;
-  border: none;
-  color: white;
-  background: rgb(1, 33, 90);
-  border-radius: 4px;
-  cursor: pointer;
+.error {
+  background-color: rgba(145, 2, 2, 0.15);
+  border-color: rgba(94, 2, 2, 0.263);
 }
 
-.roll-btn:hover {
-  opacity: 0.8;
+.correct {
+  background-color: rgba(21, 220, 7, 0.224);
+  border-color: rgba(21, 220, 7, 0.348);
 }
 
-.roll-btn:active {
-  opacity: 1;
-  box-shadow: inset 2px 2px 10px 1px rgba(0, 0, 0, 0.5);
+.button {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  align-items: center;
+  gap: 20px;
 }
-
-@media (max-width: 415px) {
-  .bord {
-    height: 100vh;
-  }
+.button h4 {
+  font-size: 22px;
 }

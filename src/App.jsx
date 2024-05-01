@@ -1,89 +1,74 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import WelcomePage from "./WelcomePage";
+import quations from "./quation.js";
+import Quiz from "./Quiz";
 import "./index.css";
-import Dice from "./Dice";
 
 export default function App() {
-  const [dice, setDice] = React.useState(allDice());
-  const [tenzies, setTenzies] = React.useState(false);
+  const [isWelcomePage, setIsWelcomePage] = useState(true);
+  const [quizs, setQuizs] = useState(quations);
+  const [checked, setChecked] = useState(false);
+  const [score, setScore] = useState(0);
+  const toggleWelcomePage = () => {
+    setIsWelcomePage((prevIsWelcomePage) => !prevIsWelcomePage);
+  };
 
-  // generate Random value
-  function getRandomValue() {
-    const randomNumber = Math.ceil(Math.random() * 6);
-    return {
-      value: randomNumber,
-      id: crypto.randomUUID(),
-      isHeld: false,
-    };
-  }
-  // create new array with 10 random numbers
-  function allDice() {
-    const dice = [];
-    for (let i = 0; i < 10; i++) {
-      const randomNumber = Math.ceil(Math.random() * 6);
-      dice.push(getRandomValue());
-    }
-    return dice;
-  }
-
-  // flip dice
-  function holdDice(id) {
-    !tenzies &&
-      setDice((oldDice) =>
-        oldDice.map((item) =>
-          item.id === id ? { ...item, isHeld: !item.isHeld } : item
+  const setAnswer = (id, index) => {
+    !checked &&
+      setQuizs((prevQuizs) =>
+        prevQuizs.map((quiz) =>
+          quiz.id === id ? { ...quiz, userAnswer: index } : quiz
         )
       );
-  }
+  };
 
-  // roll
-  function roll() {
-    if (!tenzies) {
-      setDice((oldDice) =>
-        oldDice.map((item) => (item.isHeld ? item : getRandomValue()))
-      );
-    } else {
-      setTenzies(false);
-      setDice(allDice());
+  const checkAnswers = () => {
+    if (!checked) {
+      let ans = [];
+      quizs.forEach((quiz) => (ans = [...ans, quiz.userAnswer]));
+      const allFilled = ans.every((item) => typeof item === "number");
+      if (allFilled) {
+        setChecked(true);
+        quizs.forEach((quiz) => {
+          const { userAnswer, correctAnswerIndex } = quiz;
+          if (userAnswer === correctAnswerIndex) {
+            setScore((prevScore) => prevScore + 1);
+          }
+        });
+      }
+    } else if (checked) {
+      setQuizs(quations);
+      setChecked(false);
+      setScore(0);
     }
-  }
-
-  // sync with dice state
-  React.useEffect(() => {
-    const isAllHeld = dice.every((item) => item.isHeld);
-    const initalValue = dice[0].value;
-    const isAllSameNumbers = dice.every((item) => item.value === initalValue);
-
-    if (isAllHeld && isAllSameNumbers) {
-      setTenzies(true);
-    }
-  }, [dice]);
+  };
 
   return (
     <main>
-      <div className="bord">
-        <div className="header">
-          <h1>Tenzies</h1>
-          <p>
-            Roll until all dice are the same. Click each die to freeze it at its
-            current value between rolls.
-          </p>
-        </div>
-        <div className="dice-container">
-          {dice.map((item) => (
-            <Dice
-              value={item.value}
-              key={item.id}
-              isHeld={item.isHeld}
-              holdDice={() => holdDice(item.id)}
+      {isWelcomePage ? (
+        <WelcomePage toggle={toggleWelcomePage} />
+      ) : (
+        <div className="container">
+          {quizs.map((quiz) => (
+            <Quiz
+              key={quiz.id}
+              data={quiz}
+              setAnswer={setAnswer}
+              checked={checked}
             />
           ))}
+          <div className="button">
+            {checked && (
+              <h4>
+                You scored {score}/{quizs.length} correct answers{" "}
+              </h4>
+            )}
+            <button className="btn" onClick={checkAnswers}>
+              {!checked ? "Check answers" : "Play again"}
+            </button>
+          </div>
         </div>
-        <div className="button">
-          <button className="roll-btn" onClick={roll}>
-            {tenzies ? "New Game" : "Roll"}
-          </button>
-        </div>
-      </div>
+      )}
     </main>
   );
 }
