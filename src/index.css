@@ -16,8 +16,9 @@ main::before {
   width: 200px;
   height: 200px;
   position: absolute;
-  background: rgba(230, 187, 187, 0.716);
-  border-radius: 50%;
+  background: rgba(15, 125, 79, 0.181);
+  border-radius: 50px;
+  rotate: 20deg;
   right: -100px;
   top: -100px;
 }
@@ -26,10 +27,11 @@ main::after {
   width: 200px;
   height: 200px;
   position: absolute;
-  background: rgba(96, 145, 218, 0.653);
-  border-radius: 50%;
+  background: rgba(96, 218, 96, 0.476);
+  border-radius: 50px;
   bottom: -100px;
   left: -100px;
+  rotate: -20deg;
 }
 
 .welcome {
